@@ -1,0 +1,274 @@
+int x = 500;
+int y = 675;
+int sPosY = 500;
+int sPosX = 675;
+int sDur = 0;
+int sRecharge = 0;
+int bCount = 0;
+int time = 0;
+int bX = x;
+int bY = y;
+int wTime = 0;
+ArrayList <Bullet> bullets;
+void setup() {
+  size(1000,800); 
+  bullets = new ArrayList();
+}
+void draw() {
+  Time();
+  if( time < 8000) {
+    background(0);
+    Explain();
+  } else {
+  background(0);
+  moveLeft();
+  moveRight();
+  moveUp();
+  moveDown();
+  ship();
+  sheild();
+  sheildRecharge();
+  sBar();
+  waves();
+  removeToLimit(7);
+  moveAll();
+  displayAll();
+ 
+}}
+void moveLeft() {
+  if(keyPressed) {
+    if(key=='a' || key == 'A') {
+      x = x - 10;
+      bX = x;
+      if(x < 150) {
+        x = 150;
+      }}}}
+void moveRight() {
+      if(keyPressed) {
+        if(key == 'd' || key == 'D') {
+          x = x + 10;
+          bX = x;
+          if(x > 850) {
+            x = 850;
+          }}}}
+void moveUp() {
+ if(keyPressed) {
+if(key == 'w' || key == 'W') {
+  y = y - 5;
+  bY = y - 20;
+  if(y < 575) {
+    y = 575;
+  }}}}
+void moveDown() {
+  if(keyPressed) {
+    if(key == 's' || key == 'S' ) {
+      y = y + 5;
+      bY = y - 20;
+      if(y > 775) {
+        y = 775;
+      }}}}
+void ship() {
+  noStroke();
+  fill(100,100,255);
+ triangle(x,y-15,x-15,y+10,x+15,y+10);
+  noStroke();
+  fill(200,200,255);
+  triangle(x,y-5,x+30,y+10,x-30,y+10);
+  fill(random(255),random(50),0);
+  noStroke();
+  triangle(x,y,x+15,y+10,x-15,y+10);
+}
+void sheild() {
+ if(keyPressed) {
+   if(key == CODED) {
+      if(keyCode == SHIFT) {
+        sDur = sDur + 1;
+        if(sDur > 100) {
+          noStroke();
+          noFill();
+          ellipse(sPosX,sPosY,100,35);
+        } else {
+     stroke(0,150,255);
+     noFill();
+     ellipse(sPosX,sPosY,100,35);
+      }}}}
+ sPosX = x;
+ sPosY = y;
+loop();
+}
+void sheildRecharge() {
+   stroke(150);
+  noFill();
+  rect(443,20,100,10);
+  if(sDur > 100 ) {
+  sRecharge = sRecharge + 1;
+  if(sRecharge > 2000) {
+    sRecharge = 0;
+    sDur = 0;
+  }}
+  if(sDur < 100) {
+    fill(255,0,0);
+    text("Shield Charged",450,15);
+  }
+  if(sDur > 100) {
+    fill(255,0,0);
+    text("Shield Charging",450,15); 
+  }}
+void sBar() {
+  noStroke();
+  if(sDur < 100) {
+    noStroke();
+    fill(205,0,0);
+    rect(444,21,20,9);
+    if(sDur < 80) {
+      noStroke();
+      fill(255,0,0);
+      rect(463,21,20,9);
+      if(sDur < 60) {
+        noStroke();
+        fill(255,100,0);
+        rect(483,21,20,9);
+        if(sDur < 40) {
+          noStroke();
+          fill(255,150,0);
+          rect(503,21,20,9);
+          if(sDur < 20) {
+            noStroke();
+            fill(255,205,0);
+            rect(523,21,20,9);
+          }}}}}
+if(sRecharge > 400) {
+  noStroke();
+  fill(205,0,0);
+  rect(444,21,20,9);
+  if(sRecharge > 800) {
+    noStroke();
+    fill(255,0,0);
+    rect(463,21,20,9);
+    if(sRecharge > 1200) {
+      noStroke();
+      fill(255,100,0);
+      rect(483,21,20,9);
+      if(sRecharge > 1600) {
+        noStroke();
+        fill(255,150,0);
+        rect(503,21,20,9);
+        if(sRecharge > 2000) {
+          noStroke();
+          fill(255,205,0);
+          rect(523,21,20,9);
+        }}}}}}
+  void bCounter() {
+    if(keyPressed) {
+      if(key == CODED) {
+        if(keyCode == CONTROL) {
+          bCount = bCount + 1;
+        }}}}
+  void Explain() {
+    stroke(255);
+    fill(255);
+    text("Pressing SHIFT activates a",100,50);
+    fill(255);
+    text("shield for a temporary",100,64);
+    fill(255);
+    text("amount of time",100,78);
+    noFill();
+    rect(100,91,50,29);
+    fill(255);
+    text("SHIFT",110,110);
+    fill(255);
+    text("Pressing the W key",100,350);
+    fill(255);
+    text("moves the ship upwoards",100,364);
+    noFill();
+    rect(100,378,50,29);
+    text("W",120,398);
+   fill(255);
+   text("Pressing the S key",100,600);
+   fill(255);
+   text("moves the ship downwoards",100,614);
+   noFill();
+   rect(100,628,50,30);
+   fill(255);
+    text("S",120,647);
+     stroke(255);
+    fill(255);
+    text("Pressing the Mouse causes",700,50);
+    fill(255);
+    text("the ship to shoot a single",700,64);
+    fill(255);
+    text(" bullet (cannot be held down)",700,78);
+    noFill();
+    rect(700,91,50,29);
+    fill(255);
+    text("MOUSE",705,110);
+    fill(255);
+    text("Pressing the D key moves",700,350);
+    fill(255);
+    text("the ship to the left",700,364);
+    noFill();
+    rect(700,378,50,29);
+    text("D",720,398);
+   fill(255);
+   text("Pressing the A key moves",700,600);
+   fill(255);
+   text("the ship to the right",700,614);
+   noFill();
+   rect(700,628,50,30);
+   fill(255);
+    text("A",720,647);
+    if(time < 8000) {
+      Skip();
+    }}
+  void Time() {
+    time = time + 5;
+  }
+  void Skip() {
+    stroke(255,0,255);
+      noFill();
+      rect(300,725,400,50);
+      fill(255,0,255);
+      text("Press Space-Bar to Skip",420,750);
+    if(keyPressed) {
+      if(key == ' ') {
+      time = 8000;
+    }}}
+    void waves() {
+    }  
+    class Bullet {
+  float x;
+  float y;
+  float speed;
+  Bullet(float tx, float ty) {
+    x = tx;
+    y = ty;
+  }
+  void display() {
+    fill(255);
+    noStroke();
+    rect(x,y,3,7);
+  }
+  void move() {
+    y -= 0.75;
+  }
+}
+ 
+void removeToLimit(int maxLength) {
+  while(bullets.size() > maxLength) {
+    bullets.remove(0);
+  }
+}
+void moveAll() {
+  for(Bullet temp : bullets) {
+    temp.move();
+  }
+}
+void displayAll() {
+  for(Bullet temp : bullets) {
+    temp.display();
+  }
+}
+void mousePressed() {
+  Bullet temp = new Bullet(bX,bY);
+  bullets.add(temp);
+  }
